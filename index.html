@@ -445,10 +445,18 @@
     </button>
     
     <!-- Chatbot Modal -->
+<!-- Trigger Button for Chatbot -->
+<button id="chatbotButton"
+  class="fixed bottom-4 right-4 z-50 p-3 bg-primary-light dark:bg-primary-dark text-white rounded-full shadow-lg text-xl relative">
+  <i class="fas fa-comment-dots text-xl"></i>
+  <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-[10px] animate-pulse">1</span>
+</button>
+
+<!-- Chatbot Modal -->
 <div id="chatbotModal"
-  class="absolute bottom-16 right-0 w-[300px] h-[450px] sm:w-[400px] sm:h-[650px] bg-white dark:bg-gray-800 rounded-t-lg shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+  class="absolute bottom-16 right-0 w-[320px] h-[480px] sm:w-[420px] sm:h-[680px] bg-white dark:bg-gray-800 rounded-t-lg shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700 hidden z-50">
   <div class="bg-secondary-light dark:bg-secondary-dark text-white p-2 flex justify-between items-center">
-    <h3 class="font-bold text-sm">Customer Support</h3>
+    <h3 class="font-bold text-xs sm:text-sm">Customer Support</h3>
     <button id="closeChatbot" class="text-white hover:text-gray-200">
       <i class="fas fa-times"></i>
     </button>
@@ -457,75 +465,87 @@
 </div>
 
 
-  <script>
-    // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobileMenuButton');
-    const mobileMenu = document.getElementById('mobileMenu');
-    
-    mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
-      mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden') ? 
-        '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
-    });
 
-    // Theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobileMenuButton');
+  const mobileMenu = document.getElementById('mobileMenu');
 
-    themeToggle.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
-    });
+  mobileMenuButton?.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden')
+      ? '<i class="fas fa-bars"></i>'
+      : '<i class="fas fa-times"></i>';
+  });
 
-    // Set initial theme
-    if (localStorage.getItem('theme') === 'dark' || 
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      html.classList.add('dark');
-    }
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const html = document.documentElement;
 
-    // Chatbot functionality
-    const chatbotButton = document.getElementById('chatbotButton');
-    const chatbotModal = document.getElementById('chatbotModal');
-    const closeChatbot = document.getElementById('closeChatbot');
-    let isChatbotOpen = false;
+  themeToggle?.addEventListener('click', () => {
+    html.classList.toggle('dark');
+    localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+  });
 
-    function toggleChatbot() {
-      isChatbotOpen = !isChatbotOpen;
-      if (isChatbotOpen) {
-        chatbotModal.classList.remove('chatbot-closed');
-        chatbotModal.classList.add('chatbot-open');
-        chatbotButton.innerHTML = '<i class="fas fa-times text-xl"></i>';
-      } else {
-        chatbotModal.classList.remove('chatbot-open');
-        chatbotModal.classList.add('chatbot-closed');
-        chatbotButton.innerHTML = '<i class="fas fa-comment-dots text-xl"></i><span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-[10px] animate-pulse">1</span>';
-      }
-    }
+  // Set initial theme
+  if (
+    localStorage.getItem('theme') === 'dark' ||
+    (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    html.classList.add('dark');
+  }
 
-    chatbotButton.addEventListener('click', toggleChatbot);
-    closeChatbot.addEventListener('click', toggleChatbot);
+  // Chatbot functionality
+  const chatbotButton = document.getElementById('chatbotButton');
+  const chatbotModal = document.getElementById('chatbotModal');
+  const closeChatbot = document.getElementById('closeChatbot');
 
-    // Simulate new message notification
-    setTimeout(() => {
-      const notification = document.createElement('div');
-      notification.className = 'absolute bottom-20 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 text-sm w-64 border border-gray-200 dark:border-gray-700 animate-bounce';
-      notification.innerHTML = `
-        <div class="flex items-start">
-          <div class="flex-shrink-0 bg-secondary-light dark:bg-secondary-dark text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
-            <i class="fas fa-robot text-xs"></i>
-          </div>
-          <div>
-            <p class="font-medium text-gray-800 dark:text-white">Hi there! Need help?</p>
-            <p class="text-gray-600 dark:text-gray-300">Our virtual assistant is here to help you.</p>
-          </div>
+  function openChatbot() {
+    chatbotModal.classList.remove('hidden');
+    chatbotButton.innerHTML = '<i class="fas fa-times text-xl"></i>';
+  }
+
+  function closeChatbotFunc() {
+    chatbotModal.classList.add('hidden');
+    chatbotButton.innerHTML = `
+      <i class="fas fa-comment-dots text-xl"></i>
+      <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center text-[10px] animate-pulse">1</span>
+    `;
+  }
+
+  let isChatbotOpen = false;
+  chatbotButton?.addEventListener('click', () => {
+    isChatbotOpen = !isChatbotOpen;
+    isChatbotOpen ? openChatbot() : closeChatbotFunc();
+  });
+
+  closeChatbot?.addEventListener('click', () => {
+    isChatbotOpen = false;
+    closeChatbotFunc();
+  });
+
+  // Simulate chatbot notification
+  setTimeout(() => {
+    const notification = document.createElement('div');
+    notification.className = 'absolute bottom-20 right-4 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-3 text-sm w-64 border border-gray-200 dark:border-gray-700 animate-bounce z-50';
+    notification.innerHTML = `
+      <div class="flex items-start">
+        <div class="flex-shrink-0 bg-secondary-light dark:bg-secondary-dark text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
+          <i class="fas fa-robot text-xs"></i>
         </div>
-      `;
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.remove();
-      }, 5000);
-    }, 10000);
-  </script>
+        <div>
+          <p class="font-medium text-gray-800 dark:text-white">Hi there! Need help?</p>
+          <p class="text-gray-600 dark:text-gray-300">Our virtual assistant is here to help you.</p>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.remove();
+    }, 5000);
+  }, 10000);
+</script>
+
 </body>
 </html>
