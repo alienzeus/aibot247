@@ -95,6 +95,13 @@
     .category-card:hover i {
       transform: scale(1.1);
     }
+
+    @media only screen and (max-width: 420px) {
+  .chatbot-container {
+      height: 450px;
+      width: 300px;
+    }
+}
   </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300 pt-20">
@@ -139,14 +146,17 @@
           <button class="p-2 rounded-full bg-white/20 dark:bg-gray-700/50 hover:bg-white/30 dark:hover:bg-gray-600/50 transition text-gray-700 dark:text-gray-200 relative">
             <i class="fas fa-search"></i>
           </button>
-          <button class="hidden p-2 rounded-full bg-white/20 dark:bg-gray-700/50 hover:bg-white/30 dark:hover:bg-gray-600/50 transition text-gray-700 dark:text-gray-200 relative">
-            <i class="fas fa-heart"></i>
-            <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs text-white">3</span>
-          </button>
-          <button class="hidden p-2 rounded-full bg-white/20 dark:bg-gray-700/50 hover:bg-white/30 dark:hover:bg-gray-600/50 transition text-gray-700 dark:text-gray-200 relative">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="absolute -top-1 -right-1 w-5 h-5 bg-primary-light dark:bg-primary-dark rounded-full flex items-center justify-center text-xs text-white">2</span>
-          </button>
+       <!-- Hidden on small screens, visible on md and above -->
+<button class="hidden md:flex p-2 rounded-full bg-white/20 dark:bg-gray-700/50 hover:bg-white/30 dark:hover:bg-gray-600/50 transition text-gray-700 dark:text-gray-200 relative">
+  <i class="fas fa-heart"></i>
+  <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs text-white">3</span>
+</button>
+
+<button class="hidden md:flex p-2 rounded-full bg-white/20 dark:bg-gray-700/50 hover:bg-white/30 dark:hover:bg-gray-600/50 transition text-gray-700 dark:text-gray-200 relative">
+  <i class="fas fa-shopping-cart"></i>
+  <span class="absolute -top-1 -right-1 w-5 h-5 bg-primary-light dark:bg-primary-dark rounded-full flex items-center justify-center text-xs text-white">2</span>
+</button>
+
           
           <!-- Mobile Menu Button -->
           <button id="mobileMenuButton" class="md:hidden p-2 rounded-full bg-white/20 dark:bg-gray-700/50 hover:bg-white/30 dark:hover:bg-gray-600/50 transition text-gray-700 dark:text-gray-200">
